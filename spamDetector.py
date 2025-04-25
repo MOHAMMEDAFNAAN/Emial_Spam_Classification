@@ -1,3 +1,4 @@
+import pythoncom
 import streamlit as st
 import pickle
 from sklearn.feature_extraction.text import CountVectorizer
@@ -5,8 +6,9 @@ import numpy as np
 from win32com.client import Dispatch
 
 def speak(text):
-	speak=Dispatch(("SAPI.SpVoice"))
-	speak.Speak(text)
+    pythoncom.CoInitialize()  # Initialize COM
+    speak = Dispatch("SAPI.SpVoice")
+    speak.Speak(text)
 
 
 model = pickle.load(open('spam.pkl','rb'))
